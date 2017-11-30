@@ -389,15 +389,16 @@ public class AudioHandler extends CordovaPlugin {
         String TAG1 = "AudioHandler.setAudioOutputDevice(): Error : ";
 
         AudioManager audiMgr = (AudioManager) this.cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
-        if (output == 2) {
-            audiMgr.setRouting(AudioManager.MODE_NORMAL, AudioManager.ROUTE_SPEAKER, AudioManager.ROUTE_ALL);
-        }
-        else if (output == 1) {
-            audiMgr.setRouting(AudioManager.MODE_NORMAL, AudioManager.ROUTE_EARPIECE, AudioManager.ROUTE_ALL);
-        }
-        else {
-             LOG.e(TAG1," Unknown output device");
-        }
+        // output = 1;
+        // if (output == 2) {
+        //     audiMgr.setRouting(AudioManager.MODE_NORMAL, AudioManager.ROUTE_SPEAKER, AudioManager.ROUTE_ALL);
+        // }
+        // else if (output == 1) {
+        audiMgr.setRouting(AudioManager.MODE_NORMAL, AudioManager.ROUTE_EARPIECE, AudioManager.ROUTE_ALL);
+        // }
+        // else {
+        //      LOG.e(TAG1," Unknown output device");
+        // }
     }
 
     public void pauseAllLostFocus() {
