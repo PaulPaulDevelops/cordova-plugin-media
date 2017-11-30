@@ -389,16 +389,15 @@ public class AudioHandler extends CordovaPlugin {
         String TAG1 = "AudioHandler.setAudioOutputDevice(): Error : ";
 
         AudioManager audiMgr = (AudioManager) this.cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
-        // output = 1;
-        // if (output == 2) {
-        //     audiMgr.setRouting(AudioManager.MODE_NORMAL, AudioManager.ROUTE_SPEAKER, AudioManager.ROUTE_ALL);
-        // }
-        // else if (output == 1) {
-        audiMgr.setRouting(AudioManager.MODE_NORMAL, AudioManager.ROUTE_EARPIECE, AudioManager.ROUTE_ALL);
-        // }
-        // else {
-        //      LOG.e(TAG1," Unknown output device");
-        // }
+        if (output == 2) {
+            audiMgr.setRouting(AudioManager.MODE_NORMAL, AudioManager.ROUTE_SPEAKER, AudioManager.ROUTE_ALL);
+        }
+        else if (output == 1) {
+            audiMgr.setRouting(AudioManager.MODE_NORMAL, AudioManager.ROUTE_EARPIECE, AudioManager.ROUTE_ALL);
+        }
+        else {
+             LOG.e(TAG1," Unknown output device");
+        }
     }
 
     public void pauseAllLostFocus() {
@@ -441,9 +440,10 @@ public class AudioHandler extends CordovaPlugin {
         String TAG2 = "AudioHandler.getAudioFocus(): Error : ";
 
         AudioManager am = (AudioManager) this.cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
-        int result = am.requestAudioFocus(focusChangeListener,
-                                          AudioManager.STREAM_MUSIC,
-                                          AudioManager.AUDIOFOCUS_GAIN);
+        int result = am.requestAudioFocus(null,
+                                          AudioManager.STREAM_VOICE_CALL,
+                                          AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+        am.setMode(AudioManager.MODE_IN_COMMUNICATION);
 
         if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             LOG.e(TAG2,result + " instead of " + AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
